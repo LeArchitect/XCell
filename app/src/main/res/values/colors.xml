@@ -5,12 +5,13 @@
     <color name="colorAccent">#D81B60</color>
     <color name="gray">#666666</color>
     <color name="light_gray">#838181</color>
+    <color name="blue_action_bar">#258e8e</color>
+    <color name="background">#ebfafa</color>
     <color name="blue1">#000080</color>
     <color name="blue2">#00008B</color>
     <color name="blue3">#0000CD</color>
     <color name="blue4">#0000FF</color>
     <color name="blue5">#00BFFF</color>
-    <color name="blue6">#00CED1</color>
-    <color name="blue7">#1E90FF</color>
-    <color name="background">#A8E1FF</color>
+    <color name="blue6">#2aa2a2</color>
+    <color name="blue7">#34cbcb</color>
 </resources>
