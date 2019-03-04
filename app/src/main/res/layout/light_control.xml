@@ -38,13 +38,13 @@
     />
     <ImageView
             android:id="@+id/brightness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="386dp"
+            android:layout_height="393dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             app:layout_constraintTop_toBottomOf="@id/brightness_text"
             app:srcCompat="@drawable/cc"
-    />
+            android:layout_marginTop="20dp" tools:layout_editor_absoluteX="12dp"/>
 
     <SeekBar
             android:id="@+id/brightness_control"
