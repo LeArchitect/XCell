@@ -11,11 +11,11 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:background="@color/blue7"
+                android:background="@color/blue_action_bar"
                 android:layout_height="30dp">
             <ImageButton
                     android:layout_height="wrap_content" app:srcCompat="?attr/actionModeCloseDrawable"
-                    android:id="@+id/imageButton6" android:layout_weight="1" android:background="@color/blue7"
+                    android:id="@+id/imageButton6" android:layout_weight="1" android:background="@color/blue_action_bar"
                     android:layout_width="20dp"/>
             <Space
                     android:layout_width="280dp"
