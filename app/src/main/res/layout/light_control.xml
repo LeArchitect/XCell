@@ -21,7 +21,8 @@
                 android:adjustViewBounds="false"
                 android:background="@color/blue7"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/arrow" />
+                app:srcCompat="?attr/actionModeCloseDrawable" />
+ />
     </LinearLayout>
     <TextView
             android:layout_width="wrap_content"
