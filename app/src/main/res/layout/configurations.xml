@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:background="@color/background">
 
     <LinearLayout
             android:orientation="vertical"
@@ -11,11 +11,11 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:background="@color/light_gray"
+                android:background="@color/blue7"
                 android:layout_height="30dp">
             <ImageButton
                     android:layout_height="wrap_content" app:srcCompat="?attr/actionModeCloseDrawable"
-                    android:id="@+id/imageButton6" android:layout_weight="1" android:background="@color/light_gray"
+                    android:id="@+id/imageButton6" android:layout_weight="1" android:background="@color/blue7"
                     android:layout_width="20dp"/>
             <Space
                     android:layout_width="280dp"
@@ -27,7 +27,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:background="@color/gray"
+                android:background="@color/blue7"
                 android:layout_height="match_parent">
             <TextView
                     android:text="Play music"
@@ -36,11 +36,11 @@
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" app:srcCompat="@drawable/ic_settings_wrench"
-                    android:id="@+id/ConfSettings" android:layout_weight="1" android:background="@color/gray"/>
+                    android:id="@+id/ConfSettings" android:layout_weight="1" android:background="@color/blue7"/>
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" app:srcCompat="@drawable/ic_settings_delete"
-                    android:id="@+id/DeleteConfiguration" android:layout_weight="1" android:background="@color/gray"/>
+                    android:id="@+id/DeleteConfiguration" android:layout_weight="1" android:background="@color/blue7"/>
         </LinearLayout>
         <Space
                 android:layout_width="match_parent"
