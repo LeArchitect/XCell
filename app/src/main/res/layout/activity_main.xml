@@ -54,8 +54,8 @@
             android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/button4"/>
     <Button
             android:text="Bed Room"
-            android:layout_width="167"
-            android:layout_height="136"
+            android:layout_width="167dp"
+            android:layout_height="136dp"
             android:id="@+id/button5"
             android:background="@color/blue7"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,8 +65,8 @@
             android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/button6"/>
     <Button
             android:text="Garage"
-            android:layout_width="167"
-            android:layout_height="136"
+            android:layout_width="167dp"
+            android:layout_height="136dp"
             android:id="@+id/button6"
             app:layout_constraintEnd_toStartOf="@+id/button7"
             android:layout_marginEnd="16dp" app:layout_constraintBottom_toBottomOf="parent"
@@ -77,8 +77,8 @@
             app:layout_constraintTop_toBottomOf="@+id/button5"/>
     <Button
             android:text="Add Room"
-            android:layout_width="167"
-            android:layout_height="136"
+            android:layout_width="167dp"
+            android:layout_height="136dp"
             android:id="@+id/button7"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
