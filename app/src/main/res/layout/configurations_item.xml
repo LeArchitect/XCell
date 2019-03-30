@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@color/blue_action_bar"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="Play music"
+                android:layout_width="224dp"
+                android:layout_height="50dp"
+                android:id="@+id/device_name_conf"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_settings_wrench"
+                android:id="@+id/conf_settings"
+                android:layout_weight="1"
+                android:background="@color/blue_action_bar"
+        />
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_settings_delete"
+                android:id="@+id/conf_delete"
+                android:layout_weight="1"
+                android:background="@color/blue_action_bar"/>
+    </LinearLayout>
+</LinearLayout>
