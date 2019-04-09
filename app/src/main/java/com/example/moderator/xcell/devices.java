@@ -1,13 +1,11 @@
 package com.example.moderator.xcell;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,7 +49,7 @@ public class devices extends AppCompatActivity {
     {
 
 
-        RecyclerView conf_list = findViewById(R.id.devices_list);
+        RecyclerView conf_list = findViewById(R.id.rooms_list);
         Devices_adapter adapter = new Devices_adapter(devices, this);
         conf_list.setAdapter(adapter);
         conf_list.setLayoutManager(new LinearLayoutManager(this));

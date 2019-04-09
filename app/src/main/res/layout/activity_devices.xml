@@ -6,15 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".devices">
-  <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
-                                          android:layout_height="wrap_content"
-                                          android:id="@+id/devices_list"
-                                          app:layout_constraintTop_toTopOf="parent"
+  <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/rooms_list"
+          app:layout_constraintTop_toTopOf="parent"
                                         >
   </android.support.v7.widget.RecyclerView>
     <ImageButton android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 app:layout_constraintTop_toBottomOf="@id/devices_list"
+                 app:layout_constraintTop_toBottomOf="@id/rooms_list"
                  android:src="@drawable/plus"
                  android:background="@color/blue7"
                  android:onClick="addItem"

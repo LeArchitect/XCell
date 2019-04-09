@@ -10,6 +10,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".add_device">
+
         </activity>
         <activity android:name=".Edit_configurations">
         </activity>
