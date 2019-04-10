@@ -115,15 +115,4 @@
                 android:text="34%"
                 android:textAlignment="viewEnd" />
     </LinearLayout>
-    <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/plus"
-            android:background="@color/blue7"
-            android:onClick="addDevice"
-            android:textSize="40dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp" android:id="@+id/add_room2"/>
 </LinearLayout>
