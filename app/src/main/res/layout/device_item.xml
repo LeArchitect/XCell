@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
               android:layout_height="wrap_content"
                 android:orientation="vertical"
               android:id="@+id/parent_layout_devices"
@@ -115,10 +115,15 @@
                 android:text="34%"
                 android:textAlignment="viewEnd" />
     </LinearLayout>
-    <Space
+    <ImageButton
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:id="@+id/space_4"
-
-    />
+            android:layout_height="100dp"
+            android:src="@drawable/plus"
+            android:background="@color/blue7"
+            android:onClick="addDevice"
+            android:textSize="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp" android:id="@+id/add_room2"/>
 </LinearLayout>

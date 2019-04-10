@@ -15,11 +15,7 @@
         <activity android:name=".Edit_configurations">
         </activity>
         <activity android:name=".configurations">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".light_control"
