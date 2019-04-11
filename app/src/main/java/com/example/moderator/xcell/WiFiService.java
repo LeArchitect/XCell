@@ -1,55 +1,15 @@
 package com.example.moderator.xcell;
 
 import android.app.Service;
-import android.app.job.JobInfo;
-import android.app.job.JobParameters;
-import android.app.job.JobScheduler;
-import android.app.job.JobService;
 import android.content.*;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
-class WiFiScheduler {
-
-    // schedule the start of the service every 10 - 30 seconds
-    public static void scheduleJob(Context context) {
-        ComponentName serviceComponent = new ComponentName(context, WiFiJobService.class);
-        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
-        builder.setMinimumLatency(1 * 1000); // wait at least
-        builder.setOverrideDeadline(3 * 1000); // maximum delay
-        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
-        //builder.setRequiresDeviceIdle(true); // device should be idle
-        //builder.setRequiresCharging(false); // we don't care if the device is charging or not
-        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
-        jobScheduler.schedule(builder.build());
-    }
-
-}
-
-class WiFiJobService extends JobService {
-    private static final String TAG = "WiFiService";
-
-    @Override
-    public boolean onStartJob(JobParameters params) {
-        Intent service = new Intent(getApplicationContext(), WiFiService.class);
-        getApplicationContext().startService(service);
-        WiFiScheduler.scheduleJob(getApplicationContext()); // reschedule the job
-        return true;
-    }
-
-    @Override
-    public boolean onStopJob(JobParameters params) {
-        return true;
-    }
-
-}
 
 public class WiFiService extends Service {
     public WiFiService() {
