@@ -1,10 +1,11 @@
 package com.example.moderator.xcell;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.app.job.JobInfo;
+import android.app.job.JobParameters;
+import android.app.job.JobScheduler;
+import android.app.job.JobService;
+import android.content.*;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
@@ -14,6 +15,49 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+class WiFiScheduler {
+
+    // schedule the start of the service every 10 - 30 seconds
+    public static void scheduleJob(Context context) {
+        ComponentName serviceComponent = new ComponentName(context, WiFiJobService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
+        builder.setMinimumLatency(1 * 1000); // wait at least
+        builder.setOverrideDeadline(3 * 1000); // maximum delay
+        //builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED); // require unmetered network
+        //builder.setRequiresDeviceIdle(true); // device should be idle
+        //builder.setRequiresCharging(false); // we don't care if the device is charging or not
+        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
+        jobScheduler.schedule(builder.build());
+    }
+
+}
+
+class WifiStartServiceReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        WiFiScheduler.scheduleJob(context);
+    }
+}
+
+class WiFiJobService extends JobService {
+    private static final String TAG = "WiFiService";
+
+    @Override
+    public boolean onStartJob(JobParameters params) {
+        Intent service = new Intent(getApplicationContext(), WiFiService.class);
+        getApplicationContext().startService(service);
+        WiFiScheduler.scheduleJob(getApplicationContext()); // reschedule the job
+        return true;
+    }
+
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return true;
+    }
+
+}
 
 public class WiFiService extends Service {
     public WiFiService() {
@@ -70,12 +114,43 @@ public class WiFiService extends Service {
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
+        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
+        registerReceiver(receiver, intentFilter);
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
-        registerReceiver(receiver, intentFilter);
+        manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
+
+            @Override
+            public void onSuccess() {
+                // Code for when the discovery initiation is successful goes here.
+                // No services have actually been discovered yet, so this method
+                // can often be left blank. Code for peer discovery goes in the
+                // onReceive method, detailed below.
+            }
+
+            @Override
+            public void onFailure(int reasonCode) {
+                // Code for when the discovery initiation fails goes here.
+                // Alert the user that something went wrong.
+            }
+        });
+
+        manager.createGroup(channel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                // Device is ready to accept incoming connections from peers.
+            }
+
+            @Override
+            public void onFailure(int reason) {
+
+            }
+        });
+
+
         return START_NOT_STICKY;
     }
 
@@ -83,6 +158,12 @@ public class WiFiService extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     /*

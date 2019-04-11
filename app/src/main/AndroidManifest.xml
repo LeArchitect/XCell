@@ -23,6 +23,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".WelcomeScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <service
@@ -38,11 +43,6 @@
         <activity android:name=".configurations">
         </activity>
         <activity android:name=".room">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
                 android:name=".light_control"
@@ -52,6 +52,11 @@
         </activity>
         <activity android:name=".MainActivity">
         </activity>
+        <receiver android:name="com.example.moderator.xcell.WifiStartServiceReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
