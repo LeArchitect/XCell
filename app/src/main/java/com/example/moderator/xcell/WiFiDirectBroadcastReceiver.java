@@ -11,9 +11,9 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
     private WifiP2pManager manager;
     private Channel channel;
-    private WiFiService service;
+    private WiFiJobService service;
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, Channel channel,
-                                       WiFiService service){
+                                       WiFiJobService service){
 
         super();
         this.manager = manager;
@@ -41,13 +41,14 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             // that.
             Log.d("hereasd123","hereasd123");
             if (manager != null) {
-                manager.requestPeers(channel, service.peerListListener);
+                //manager.requestPeers(channel, service.peerListListener);
                 Log.d("hereasd","hereasd");
             }
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
 
             // Connection state changed! We should probably do something about
             // that.
+
             Log.d("ASD", "here");
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             Log.d("ASD123","here123");

@@ -35,6 +35,7 @@ public class WiFiService extends Service {
             if (refreshedPeers.equals(p2pPeers)){
                 p2pPeers.clear();
                 p2pPeers.addAll(refreshedPeers);
+                Log.d("Peers", "Tuomas");
                 Log.d("Peers: ", p2pPeers.toString());
             }
             if (p2pPeers.size() == 0){
@@ -66,7 +67,7 @@ public class WiFiService extends Service {
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
-        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
+        //receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
         registerReceiver(receiver, intentFilter);
 
     }

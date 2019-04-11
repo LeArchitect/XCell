@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,7 +77,7 @@ public class room_adapter extends RecyclerView.Adapter<room_adapter.myViewHolder
     public class myViewHolder extends RecyclerView.ViewHolder{
 
         TextView room_name;
-        ConstraintLayout parentLayout;
+        LinearLayout parentLayout;
         ImageButton delete_room;
 
         public myViewHolder(@NonNull View itemView) {
