@@ -6,5 +6,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Edit_configurations">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:orientation="vertical"
+                  android:paddingHorizontal="5dp"
+                  android:background="@color/blue7"
+    >
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Clock"
+                  android:textSize="30dp"
+                  android:textAlignment="center"
+                    />
+     <LinearLayout android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                    >
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:text="From: "/>
+         <EditText android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="HH:MM"
+                   android:id="@+id/beginning_time"
+                   android:layout_weight="1"
+         />
+         <TextView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:text="To: "/>
+         <EditText android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:text="HH:MM"
+                   android:id="@+id/end_time"
+         />
+²     </LinearLayout>
 
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>
