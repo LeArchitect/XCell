@@ -33,14 +33,6 @@ class WiFiScheduler {
 
 }
 
-class WifiStartServiceReceiver extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        WiFiScheduler.scheduleJob(context);
-    }
-}
-
 class WiFiJobService extends JobService {
     private static final String TAG = "WiFiService";
 

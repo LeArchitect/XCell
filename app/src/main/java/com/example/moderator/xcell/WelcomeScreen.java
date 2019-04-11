@@ -10,7 +10,5 @@ public class WelcomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.welcome_screen);
-        Intent wifi = new Intent(this, WiFiService.class);
-        startForegroundService(wifi);
     }
 }
