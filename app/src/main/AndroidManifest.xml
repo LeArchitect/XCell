@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.moderator.xcell">
 
+    <uses-permission
+            android:name="android.permission.ACCESS_COARSE_LOCATION"
+            android:required="true"/>
+    <uses-permission
+            android:name="android.permission.ACCESS_WIFI_STATE"
+            android:required="true"/>
+    <uses-permission
+            android:name="android.permission.CHANGE_WIFI_STATE"
+            android:required="true"/>
+    <uses-permission
+            android:name="android.permission.INTERNET"
+            android:required="true"/>
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -9,18 +22,26 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".add_device">
+        <activity android:name=".WelcomeScreen">
+        </activity>
 
+        <service
+                android:name=".WiFiService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
+        <activity android:name=".add_device">
         </activity>
         <activity android:name=".Edit_configurations">
         </activity>
         <activity android:name=".configurations">
-
         </activity>
-        <activity android:name="room">
+        <activity android:name=".room">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -28,7 +49,6 @@
                 android:parentActivityName=".devices">
         </activity>
         <activity android:name=".devices">
-
         </activity>
         <activity android:name=".MainActivity">
         </activity>

@@ -1,27 +1,30 @@
 package com.example.moderator.xcell;
 
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.os.IBinder;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WifiDirectActivity extends AppCompatActivity {
+public class WiFiService extends Service {
+    public WiFiService() {
+    }
 
     private WifiP2pManager manager;
     private boolean setIsWifiP2pEnabled = false;
     private boolean retryChannel = false;
 
     private final IntentFilter intentFilter= new IntentFilter();
-    private Channel channel;
+    private WifiP2pManager.Channel channel;
     private BroadcastReceiver receiver = null;
 
     private List<WifiP2pDevice> p2pPeers = new ArrayList<WifiP2pDevice>();
@@ -52,10 +55,7 @@ public class WifiDirectActivity extends AppCompatActivity {
     private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.wifi_activity);
-
+    public void onCreate() {
         // Indicates a change in the Wi-Fi P2P status.
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
 
@@ -70,9 +70,22 @@ public class WifiDirectActivity extends AppCompatActivity {
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
-
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
+        registerReceiver(receiver, intentFilter);
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    /*
     @Override
     protected void onResume() {
         super.onResume();
@@ -85,6 +98,7 @@ public class WifiDirectActivity extends AppCompatActivity {
         super.onPause();
         unregisterReceiver(receiver);
     }
+    */
 
     public void setPeers(List<WifiP2pDevice> peers) {
         this.peers = peers;
