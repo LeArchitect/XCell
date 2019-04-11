@@ -30,6 +30,6 @@
                 android:src="@drawable/ic_settings_delete"
                 android:id="@+id/conf_delete"
                 android:layout_weight="1"
-                android:background="@color/blue_action_bar"/>
+                android:background="@color/blue_action_bar" android:onClick="conf"/>
     </LinearLayout>
 </LinearLayout>

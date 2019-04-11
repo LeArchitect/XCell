@@ -10,14 +10,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".add_device">
+
         </activity>
         <activity android:name=".Edit_configurations">
         </activity>
         <activity android:name=".configurations">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        </activity>
+        <activity android:name="room">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
