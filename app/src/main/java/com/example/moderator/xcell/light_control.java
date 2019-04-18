@@ -23,9 +23,16 @@ public class light_control extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
+        setSupportActionBar(tb);
+
+        /*
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Light picker");
+        */
+
         Intent myIntent = getIntent();
         RGB = myIntent.getIntArrayExtra("RGB");
         p = myIntent.getIntExtra("value", 100);

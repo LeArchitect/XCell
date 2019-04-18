@@ -6,11 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".devices">
-  <android.support.v7.widget.RecyclerView
+    <include
+            android:id="@+id/custom_bar"
+            layout = "@layout/custom_bar">
+    </include>
+    <android.support.v7.widget.RecyclerView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:id="@+id/rooms_list"
-          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/custom_bar"
                                         >
   </android.support.v7.widget.RecyclerView>
     <ImageButton android:layout_width="match_parent"

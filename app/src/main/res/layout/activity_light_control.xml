@@ -7,6 +7,11 @@
         android:layout_height="match_parent"
         tools:context=".light_control">
 
+    <include
+            android:id="@+id/custom_bar"
+            layout = "@layout/custom_bar">
+    </include>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,8 +19,8 @@
             android:textSize="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_bar"
+            app:layout_constraintLeft_toLeftOf="parent"
             android:id="@+id/brightness_text"
     />
     <ImageView

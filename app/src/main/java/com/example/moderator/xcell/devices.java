@@ -16,8 +16,13 @@ public class devices extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
+        setSupportActionBar(tb);
+
+        /*
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);*/
 
         device_data x = new device_data("color_picker", "room  lamp");
         devices.add(x);
@@ -47,7 +52,7 @@ public class devices extends AppCompatActivity {
             else if (source.equals("rooms"))
             {
 
-                actionBar.setTitle(myIntent.getStringExtra("room_name"));
+                ;//actionBar.setTitle(myIntent.getStringExtra("room_name"));
             }
 
 
