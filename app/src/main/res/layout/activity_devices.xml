@@ -8,7 +8,7 @@
         tools:context=".devices">
     <include
             android:id="@+id/custom_bar"
-            layout = "@layout/custom_bar">
+            layout="@layout/custom_bar" tools:layout_editor_absoluteY="0dp" tools:layout_editor_absoluteX="169dp">
     </include>
     <android.support.v7.widget.RecyclerView
           android:layout_width="match_parent"

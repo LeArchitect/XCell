@@ -50,12 +50,5 @@ public class add_device extends AppCompatActivity {
         getApplicationContext().startActivity(myIntent);
         return;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return false;
-    }
+
 }

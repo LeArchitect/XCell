@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -76,5 +79,15 @@ public class devices extends AppCompatActivity {
         //change to add devices layout
         Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.add_device.class);
         getApplicationContext().startActivity(myIntent);
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item)
+
+    {
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -7,9 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 
 public class light_control extends AppCompatActivity {
@@ -144,14 +142,6 @@ public class light_control extends AppCompatActivity {
         myIntent.putExtra("source", "color_picker");
         getApplicationContext().startActivity(myIntent);
         return;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return false;
     }
 
 }
