@@ -17,15 +17,15 @@ public class add_device extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
-        android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
-        setSupportActionBar(tb);
+        //android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
+        //setSupportActionBar(tb);
 
 
-        /*
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Available devices");
-        */
+
         device_data x = new device_data("color_picker", "Living room lamp");
         devices.add(x);
         device_data y = new device_data("seekbar", "thermostat");

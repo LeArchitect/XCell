@@ -22,13 +22,13 @@ public class room extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms);
-        android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
-        setSupportActionBar(tb);
-/*
+    //    android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
+      //  setSupportActionBar(tb);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("Rooms");
-*/
+
        initRecylerView();
     }
     private void initRecylerView()
@@ -40,5 +40,8 @@ public class room extends AppCompatActivity {
         conf_list.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    public void onBackPressed() {
+        finishAffinity();
+        return;
+    }
 }

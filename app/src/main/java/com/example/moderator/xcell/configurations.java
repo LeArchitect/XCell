@@ -1,5 +1,6 @@
 package com.example.moderator.xcell;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,15 +20,13 @@ public class configurations extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurations);
-
+/*
         android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
         setSupportActionBar(tb);
-
-        /*
+*/
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Configurations");
-        */
         initRecylerView();
     }
     private void initRecylerView()
@@ -37,6 +36,11 @@ public class configurations extends AppCompatActivity {
         Configuration_adapter adapter = new Configuration_adapter(devices, this);
         conf_list.setAdapter(adapter);
         conf_list.setLayoutManager(new LinearLayoutManager(this));
+    }
+    public void onBackPressed() {
+        Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.devices.class);
+        getApplicationContext().startActivity(myIntent);
+        return;
     }
 
 }
