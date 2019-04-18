@@ -37,6 +37,41 @@ public class room_adapter extends RecyclerView.Adapter<room_adapter.myViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder myViewHolder, final int i) {
+        myViewHolder.room_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(mcontext, com.example.moderator.xcell.devices.class);
+                myIntent.putExtra("room_name",rooms.get(i));
+                myIntent.putExtra("source", "rooms");
+                mcontext.startActivity(myIntent);
+            }
+        });
+        if(i != (rooms.size()-1))
+        {
+            myViewHolder.parentLayout.removeView(myViewHolder.add_room);
+        }
+        else
+        {
+        myViewHolder.add_room.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rooms.add("New Room");
+                Toast.makeText(mcontext," New Room is added", Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
+            }
+        });
+        }
+
+/*
+        myViewHolder.room_name.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(mcontext,"This is a long click ", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+*/
         myViewHolder.room_name.setText(rooms.get(i));
         myViewHolder.delete_room.setOnClickListener( new View.OnClickListener(){
 
@@ -78,13 +113,14 @@ public class room_adapter extends RecyclerView.Adapter<room_adapter.myViewHolder
 
         TextView room_name;
         LinearLayout parentLayout;
-        ImageButton delete_room;
+        ImageButton delete_room, add_room;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             room_name = itemView.findViewById(R.id.room_name);
-            //parentLayout = itemView.findViewById(R.id.parent_layout_room);
+            parentLayout = itemView.findViewById(R.id.parent_layout_room);
             delete_room = itemView.findViewById(R.id.room_delete);
+            add_room = itemView.findViewById(R.id.add_room);
         }
     }
 }

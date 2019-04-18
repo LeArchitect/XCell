@@ -1,10 +1,12 @@
 package com.example.moderator.xcell;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -14,6 +16,10 @@ public class devices extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         device_data x = new device_data("color_picker", "room  lamp");
         devices.add(x);
         device_data y = new device_data("seekbar", "temperature");
@@ -38,6 +44,13 @@ public class devices extends AppCompatActivity {
                 device_data tmp = new device_data(myIntent.getStringExtra("type") , myIntent.getStringExtra("name"));
                 devices.add(tmp);
             }
+
+            else if (source.equals("rooms"))
+            {
+
+                actionBar.setTitle(myIntent.getStringExtra("room_name"));
+            }
+
 
         }
 

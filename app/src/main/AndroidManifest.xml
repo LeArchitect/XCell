@@ -2,18 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.moderator.xcell">
 
-    <uses-permission
-            android:name="android.permission.ACCESS_COARSE_LOCATION"
-            android:required="true"/>
-    <uses-permission
-            android:name="android.permission.ACCESS_WIFI_STATE"
-            android:required="true"/>
-    <uses-permission
-            android:name="android.permission.CHANGE_WIFI_STATE"
-            android:required="true"/>
-    <uses-permission
-            android:name="android.permission.INTERNET"
-            android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <application
             android:allowBackup="true"
@@ -22,17 +12,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <service
-                android:name=".WiFiJobService"
-                android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <activity android:name=".WelcomeScreen">
+        <activity android:name=".no_wifi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".welcome">
+        </activity>
         <activity android:name=".add_device">
         </activity>
         <activity android:name=".Edit_configurations">
@@ -45,9 +33,9 @@
                 android:name=".light_control"
                 android:parentActivityName=".devices">
         </activity>
-        <activity android:name=".devices">
-        </activity>
-        <activity android:name=".MainActivity">
+        <activity
+                android:name=".devices"
+                android:parentActivityName=".room">
         </activity>
     </application>
 
