@@ -1,6 +1,5 @@
 package com.example.moderator.xcell;
 
-import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 
@@ -38,42 +37,59 @@ public class Communication {
         return isRunning;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+
+    public void closeConn(){
+        try{
+            socket.close();
+            dataIn.close();
+            dataOut.close();
+            isRunning=false;
+            Thread.currentThread().interrupt();
+        } catch (IOException err){
+
+        }
+    }
+
+
+    public void sendMsg(String msg){
+        try{
+            dataOut.write(msg);
+            dataOut.flush();
+        } catch (IOException IOe){
+            Log.i(TAG, "failed to send message + " + IOe);
+            closeConn();
+        }
+    }
+
+
+    public String receiveMsg(){
+        try {
+            status = dataIn.readLine();
+            if (status != null){
+                Log.i(TAG, status);
+            }
+            else{
+                Log.i(TAG, "Null status");
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "IOException " + e);
+            closeConn();
+        }
+        return status;
+    }
+
+
     public void job() {
         Log.i(TAG, "Message recv loop");
-        isRunning=true;
-        while (socket != null && !socket.isClosed() && isRunning){
-            try {
-                status = dataIn.readLine();
-                if (status != null){
-                    Log.i(TAG, status);
-                }
-                else{
-                    Log.i(TAG, "Null status");
-                }
-
-            } catch (IOException e){
-                Log.e(TAG, "IOexception " + e);
-                Thread.currentThread().interrupt();
-                try{
-                    socket.close();
-                    dataIn.close();
-                    isRunning=false;
-                } catch (IOException err){
-
-                }
-            }
-            try {
-                Thread.sleep(100);
-            } catch(Exception e) {
-                Log.e(TAG, "Exception in recv loop " + e);
-                try{
-                    socket.close();
-                    dataIn.close();
-                    isRunning=false;
-                } catch (IOException err){
-
-                }
-            }
+        isRunning = true;
+        while (socket != null && !socket.isClosed() && isRunning) {
+            sendMsg("STATUS");
+            receiveMsg();
         }
     }
 }

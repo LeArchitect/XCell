@@ -5,8 +5,7 @@ import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class WiFiServiceDiscovery  {
@@ -14,10 +13,10 @@ public class WiFiServiceDiscovery  {
     private static final String TAG = WiFiServiceDiscovery.class.getSimpleName();
     private static final String SERVICE_TYPE = "_xcell._tcp.";
 
-    private List<NsdServiceInfo> services = new ArrayList<NsdServiceInfo>();
-    private List<Communication> comms = new ArrayList<Communication>();
+    private Map<String,NsdServiceInfo> services = new HashMap<String, NsdServiceInfo>();
+    private Map<String,Communication> serviceComms = new HashMap<String,Communication>();
+
     private boolean isDiscovering = false;
-    private NsdServiceInfo mService;
     private NsdManager nsdManager;
     private NsdManager.DiscoveryListener discoveryListener = new NsdManager.DiscoveryListener() {
 
@@ -30,11 +29,8 @@ public class WiFiServiceDiscovery  {
         @Override
         public void onServiceFound(NsdServiceInfo service) {
             // A service was found! Do something with it.
-            Log.d(TAG, "Service found");
-            if (!services.contains(service)){
-                services.add(service);
-                nsdManager.resolveService(service, resolveListener);
-            }
+            Log.d(TAG, "Service found" + service);
+            nsdManager.resolveService(service, resolveListener);
         }
 
         @Override
@@ -42,7 +38,7 @@ public class WiFiServiceDiscovery  {
             // When the network service is no longer available.
             // Internal bookkeeping code goes here.
             Log.d(TAG, "Service lost: " + service);
-            services.remove(service);
+            services.remove(service.getServiceName());
         }
 
         @Override
@@ -76,9 +72,13 @@ public class WiFiServiceDiscovery  {
 
         @Override
         public void onServiceResolved(NsdServiceInfo serviceInfo) {
-            Log.e(TAG, "Resolve Succeeded. " + serviceInfo);
-            comms.add(new Communication(serviceInfo));
-            Log.i(TAG, "returned");
+            Log.i(TAG, "Resolve Succeeded. " + serviceInfo);
+            Log.i(TAG, services.toString() + "  ;" + serviceInfo.toString());
+            if (!services.containsKey(serviceInfo.getServiceName())){
+                Communication comm = new Communication(serviceInfo);
+                services.put(serviceInfo.getServiceName(), serviceInfo);
+                serviceComms.put(serviceInfo.getServiceName(), comm);
+            }
         }
     };
 
@@ -87,13 +87,30 @@ public class WiFiServiceDiscovery  {
     }
 
     public void startServiceDiscovery(){
-        isDiscovering = true;
         nsdManager.discoverServices(
                 SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
+        isDiscovering = true;
+
     }
 
-    public void stopSerivceDiscovery(){
+    public void stopServiceDiscovery(){
         nsdManager.stopServiceDiscovery(discoveryListener);
+        isDiscovering = false;
     }
 
+    public boolean isDiscovering() {
+        return isDiscovering;
+    }
+
+    public Map<String, NsdServiceInfo> getServiceInfos() {
+        return services;
+    }
+
+    public Set<String> getServices(){
+        return services.keySet();
+    }
+
+    public Map<String, Communication> getServiceComms() {
+        return serviceComms;
+    }
 }

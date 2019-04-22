@@ -23,7 +23,7 @@ class XCellServer(object):
     def start_service(self, desc):
         self.info = ServiceInfo(
             '_xcell._tcp.local.',
-            '_xcell._xcell._tcp.local.',
+            '_Light._xcell._tcp.local.',
             socket.inet_aton(self.addr),
             self.port, 
             0, 
@@ -31,7 +31,7 @@ class XCellServer(object):
             desc, 
             'tuomas.local.')
 
-        self.zeroconf.register_service(self.info)
+        self.zeroconf.register_service(self.info, allow_name_change=True)
         self.sock.listen(5)
 
         
@@ -55,9 +55,9 @@ class XCellServer(object):
                 
 
     def send_status(self, addr, msg = "OK\n"):
-        print('Sent message: ' + msg.strip('\n') + ' To: ' + addr)
+        print('Sent message: ' + msg.strip('\n') + ' To: ' + addr[0])
         try:
-            self.connections[addr].conn.sendall(msg.encode())
+            self.connections[addr].sendall(msg.encode())
         except ConnectionAbortedError:
             return
 
@@ -69,11 +69,13 @@ if __name__ == '__main__':
     xcell.accept_connection_req()
     try:
         while True:
-            addr, data = xcell.receive_msgs()
-            if data == 'STATUS':
-                xcell.send_status(addr, "OK\n")
-            else:
-                xcell.send_status(addr, "UNKNOWN REQUEST\n")
+            msgs = list(xcell.receive_msgs())
+            for addr, data in msgs:
+                print(data)
+                if data == b'STATUS':
+                    xcell.send_status(addr, "OK\n")
+                else:
+                    xcell.send_status(addr, "UNKNOWN REQUEST\n")
             sleep(1)
     except KeyboardInterrupt:
         pass
