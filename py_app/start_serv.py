@@ -41,28 +41,25 @@ class XCellServer(object):
 
     def accept_connection_req(self):
         conn, addr = self.sock.accept()
-        host, _ = addr
-        self.connections[host] = conn
+        self.connections[addr] = conn
         print('Added new connection')
         return conn, addr
     
     def receive_msgs(self):
-        for host, conn in self.connections.items():
+        for addr, conn in self.connections.items():
             print("Data incoming")
             data = conn.recv(128)
-            msg = "OK\n"
-            try:
-                conn.sendall(msg.encode())
-            except ConnectionAbortedError:
-                return
-            yield(host, data)
-    def send_status(self, msg = "OK\n"):
-        for host, conn in self.connections.items():
-            print('Sent message: ' + msg.strip('\n') + ' To: ' + host)
-            try:
-                conn.sendall(msg.encode())
-            except ConnectionAbortedError:
-                return
+            if len(data) > 0:
+                yield(addr, data)
+                
+                
+
+    def send_status(self, addr, msg = "OK\n"):
+        print('Sent message: ' + msg.strip('\n') + ' To: ' + addr)
+        try:
+            self.connections[addr].conn.sendall(msg.encode())
+        except ConnectionAbortedError:
+            return
 
 
 if __name__ == '__main__':
@@ -72,7 +69,11 @@ if __name__ == '__main__':
     xcell.accept_connection_req()
     try:
         while True:
-            xcell.send_status()    
+            addr, data = xcell.receive_msgs()
+            if data == 'STATUS':
+                xcell.send_status(addr, "OK\n")
+            else:
+                xcell.send_status(addr, "UNKNOWN REQUEST\n")
             sleep(1)
     except KeyboardInterrupt:
         pass
