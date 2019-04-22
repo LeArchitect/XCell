@@ -1,19 +1,12 @@
 package com.example.moderator.xcell;
 
-import android.content.Context;
+
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.util.Log;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-
-import static android.support.v4.content.ContextCompat.getSystemService;
-import static android.support.v4.content.ContextCompat.getSystemServiceName;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class WiFiServiceDiscovery  {
@@ -21,6 +14,9 @@ public class WiFiServiceDiscovery  {
     private static final String TAG = WiFiServiceDiscovery.class.getSimpleName();
     private static final String SERVICE_TYPE = "_xcell._tcp.";
 
+    private List<NsdServiceInfo> services = new ArrayList<NsdServiceInfo>();
+    private List<Communication> comms = new ArrayList<Communication>();
+    private boolean isDiscovering = false;
     private NsdServiceInfo mService;
     private NsdManager nsdManager;
     private NsdManager.DiscoveryListener discoveryListener = new NsdManager.DiscoveryListener() {
@@ -34,16 +30,19 @@ public class WiFiServiceDiscovery  {
         @Override
         public void onServiceFound(NsdServiceInfo service) {
             // A service was found! Do something with it.
-            Log.i(TAG, "Service discovery success" + service);
-            nsdManager.resolveService(service, resolveListener);
-
+            Log.d(TAG, "Service found");
+            if (!services.contains(service)){
+                services.add(service);
+                nsdManager.resolveService(service, resolveListener);
+            }
         }
 
         @Override
         public void onServiceLost(NsdServiceInfo service) {
             // When the network service is no longer available.
             // Internal bookkeeping code goes here.
-            Log.e(TAG, "service lost: " + service);
+            Log.d(TAG, "Service lost: " + service);
+            services.remove(service);
         }
 
         @Override
@@ -53,14 +52,16 @@ public class WiFiServiceDiscovery  {
 
         @Override
         public void onStartDiscoveryFailed(String serviceType, int errorCode) {
-            Log.e(TAG, "Discovery failed: Error code:" + errorCode + " " + serviceType);
+            Log.e(TAG, "Discovery failed: Error code:" + errorCode + "ServiceType_ " + serviceType);
             nsdManager.stopServiceDiscovery(this);
+            isDiscovering = false;
         }
 
         @Override
         public void onStopDiscoveryFailed(String serviceType, int errorCode) {
-            Log.e(TAG, "Discovery failed: Error code:" + errorCode);
+            Log.e(TAG, "Discovery failed: Error code:" + errorCode + "ServiceType: " + serviceType);
             nsdManager.stopServiceDiscovery(this);
+            isDiscovering = false;
         }
     };
 
@@ -70,29 +71,14 @@ public class WiFiServiceDiscovery  {
         @Override
         public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
             // Called when the resolve fails. Use the error code to debug.
-            Log.e(TAG, "Resolve failed: " + errorCode);
+            Log.e(TAG, "Resolve failed: " + errorCode + "ServiceInfo: " + serviceInfo);
         }
 
         @Override
         public void onServiceResolved(NsdServiceInfo serviceInfo) {
             Log.e(TAG, "Resolve Succeeded. " + serviceInfo);
-
-            if (serviceInfo.getServiceName().equals("asd")) {
-                Log.d(TAG, "Same IP.");
-                return;
-            }
-            mService = serviceInfo;
-            int port = mService.getPort();
-            InetAddress host = mService.getHost();
-            try {
-                Socket socket = new Socket(host, port);
-                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                out.write("TstMsg");
-            } catch (UnknownHostException e) {
-
-            } catch (IOException e) {
-
-            }
+            comms.add(new Communication(serviceInfo));
+            Log.i(TAG, "returned");
         }
     };
 
@@ -101,6 +87,7 @@ public class WiFiServiceDiscovery  {
     }
 
     public void startServiceDiscovery(){
+        isDiscovering = true;
         nsdManager.discoverServices(
                 SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, discoveryListener);
     }
@@ -108,7 +95,5 @@ public class WiFiServiceDiscovery  {
     public void stopSerivceDiscovery(){
         nsdManager.stopServiceDiscovery(discoveryListener);
     }
-
-
 
 }

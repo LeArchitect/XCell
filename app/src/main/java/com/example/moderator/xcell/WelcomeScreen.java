@@ -21,7 +21,7 @@ public class WelcomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.welcome_screen);
+        setContentView(R.layout.welcome);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION);
@@ -32,18 +32,21 @@ public class WelcomeScreen extends AppCompatActivity {
             if (checkSelfPermission(Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CHANGE_WIFI_STATE}, PERMISSIONS_REQUEST_CODE_CHANGE_WIFI_STATE);
             }
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
 
         }else{
-            //do something, permission was previously granted; or legacy device
         }
         serviceDiscovery = new WiFiServiceDiscovery((NsdManager) getSystemService(Context.NSD_SERVICE));
-        serviceDiscovery.startServiceDiscovery();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         serviceDiscovery.stopSerivceDiscovery();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        serviceDiscovery.startServiceDiscovery();
     }
 }
