@@ -16,7 +16,9 @@ class XCellServer(object):
         self.port = self.sock.getsockname()[1]
         self.zeroconf = Zeroconf()
         self.info = None
+        self.connections = {}
         print(self.addr,self.port)
+
 
     def start_service(self, desc):
         self.info = ServiceInfo(
@@ -37,13 +39,40 @@ class XCellServer(object):
         self.zeroconf.unregister_service(self.info)
         self.zeroconf.close()
 
+    def accept_connection_req(self):
+        conn, addr = self.sock.accept()
+        host, _ = addr
+        self.connections[host] = conn
+        print('Added new connection')
+        return conn, addr
+    
+    def receive_msgs(self):
+        for host, conn in self.connections.items():
+            print("Data incoming")
+            data = conn.recv(128)
+            msg = "OK\n"
+            try:
+                conn.sendall(msg.encode())
+            except ConnectionAbortedError:
+                return
+            yield(host, data)
+    def send_status(self, msg = "OK\n"):
+        for host, conn in self.connections.items():
+            print('Sent message: ' + msg.strip('\n') + ' To: ' + host)
+            try:
+                conn.sendall(msg.encode())
+            except ConnectionAbortedError:
+                return
+
+
 if __name__ == '__main__':
     xcell = XCellServer()
-    xcell.start_service({'payload':'xcell'})
+    xcell.start_service({"type":"lightcontrol"})
     print('Service started')
+    xcell.accept_connection_req()
     try:
         while True:
-            print(xcell.sock.accept())
+            xcell.send_status()    
             sleep(1)
     except KeyboardInterrupt:
         pass
