@@ -25,12 +25,6 @@ public class Communication {
         } catch (IOException e ){
             Log.e(TAG,"IOError: " + e);
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                job();
-            }
-        }).start();
     }
 
     public boolean isRunning() {
@@ -85,7 +79,7 @@ public class Communication {
 
 
     public void job() {
-        Log.i(TAG, "Message recv loop");
+        Log.d(TAG, "Message recv loop");
         isRunning = true;
         while (socket != null && !socket.isClosed() && isRunning) {
             sendMsg("STATUS");
