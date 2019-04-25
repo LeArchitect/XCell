@@ -26,13 +26,6 @@ public class devices extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        device_data x = new device_data("color_picker", "room  lamp");
-        devices.add(x);
-        device_data y = new device_data("seekbar", "temperature");
-        devices.add(y);
-        device_data z = new device_data("switch", "kitchen lamp");
-        devices.add(z);
         setContentView(R.layout.activity_devices);
         Intent myIntent = getIntent();
         String source = myIntent.getStringExtra("source");
@@ -42,9 +35,6 @@ public class devices extends AppCompatActivity {
             if(source.equals("color_picker"))
             {
                 int index = myIntent.getIntExtra("index", 100);
-                devices.get(index).setRGB(myIntent.getIntArrayExtra("RGB"));
-                devices.get(index).setValue(myIntent.getIntExtra("value", 100));
-
             }
             else if (source.equals("add_device"))
             {
