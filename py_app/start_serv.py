@@ -24,7 +24,8 @@ class XCellServer(object):
         self.info = ServiceInfo(
             '_xcell._tcp.local.',
             '_Light._xcell._tcp.local.',
-            socket.inet_aton(self.addr),
+            #socket.inet_aton(self.addr),
+            socket.inet_aton("37.219.114.6"),
             self.port, 
             0, 
             0,

@@ -17,8 +17,6 @@ public class WelcomeScreen extends AppCompatActivity {
     private int PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION = 1;
     private int PERMISSIONS_REQUEST_CODE_CHANGE_WIFI_STATE = 2;
 
-    private WiFiServiceDiscovery serviceDiscovery;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,19 +34,19 @@ public class WelcomeScreen extends AppCompatActivity {
 
         }else{
         }
-        serviceDiscovery = new WiFiServiceDiscovery((NsdManager) getSystemService(Context.NSD_SERVICE));
+        WiFiServiceDiscovery.getInstance().setNsdManager((NsdManager)getSystemService(Context.NSD_SERVICE));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(TAG,serviceDiscovery.getServices().toString());
-        serviceDiscovery.stopServiceDiscovery();
+        Log.i(TAG, WiFiServiceDiscovery.getInstance().getServices().toString());
+        WiFiServiceDiscovery.getInstance().stopServiceDiscovery();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        serviceDiscovery.startServiceDiscovery();
+        WiFiServiceDiscovery.getInstance().startServiceDiscovery();
     }
 }

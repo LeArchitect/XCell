@@ -7,11 +7,11 @@ import android.util.Log;
 
 import java.util.*;
 
-
 public class WiFiServiceDiscovery  {
 
     private static final String TAG = WiFiServiceDiscovery.class.getSimpleName();
     private static final String SERVICE_TYPE = "_xcell._tcp.";
+    private static WiFiServiceDiscovery instance;
 
     private Map<String,NsdServiceInfo> services = new HashMap<String, NsdServiceInfo>();
     private Map<String,Communication> serviceComms = new HashMap<String,Communication>();
@@ -82,8 +82,21 @@ public class WiFiServiceDiscovery  {
         }
     };
 
-    public WiFiServiceDiscovery(NsdManager nsdManager){
-        this.nsdManager = nsdManager;
+    private WiFiServiceDiscovery() {
+        if (instance != null) {
+
+        }
+    }
+
+    public static WiFiServiceDiscovery getInstance() {
+        if (instance == null) {
+            instance = new WiFiServiceDiscovery();
+        }
+        return instance;
+    }
+
+    public void setNsdManager(NsdManager mgr) {
+        this.nsdManager = mgr;
     }
 
     public void startServiceDiscovery(){
