@@ -2,6 +2,7 @@ package com.example.moderator.xcell;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.nsd.NsdManager;
 import android.os.Build;
@@ -36,13 +37,12 @@ public class WelcomeScreen extends AppCompatActivity {
 
         }else{
         }
-        WiFiServiceDiscovery.getInstance().setNsdManager((NsdManager)getSystemService(Context.NSD_SERVICE));
-
         Button welcomeButton = (Button) findViewById(R.id.buttonWelcome);
 
         welcomeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new CommunicationTask().execute("_Light", "STATUS");
+                Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.room.class);
+                getApplicationContext().startActivity(myIntent);
             }
         });
     }
@@ -57,6 +57,7 @@ public class WelcomeScreen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        WiFiServiceDiscovery.getInstance().setNsdManager((NsdManager)getSystemService(Context.NSD_SERVICE));
         WiFiServiceDiscovery.getInstance().startServiceDiscovery();
     }
 }
