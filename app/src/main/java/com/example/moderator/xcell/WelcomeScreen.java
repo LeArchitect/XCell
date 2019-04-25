@@ -42,7 +42,6 @@ public class WelcomeScreen extends AppCompatActivity {
 
         welcomeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d(TAG, WiFiServiceDiscovery.getInstance().getServiceComms().get("_Light").toString());
                 new CommunicationTask().execute("_Light", "STATUS");
             }
         });
