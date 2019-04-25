@@ -30,7 +30,25 @@ public class WiFiServiceDiscovery  {
         public void onServiceFound(NsdServiceInfo service) {
             // A service was found! Do something with it.
             Log.d(TAG, "Service found" + service);
-            nsdManager.resolveService(service, resolveListener);
+            nsdManager.resolveService(service, new NsdManager.ResolveListener() {
+
+                @Override
+                public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
+                    // Called when the resolve fails. Use the error code to debug.
+                    Log.e(TAG, "Resolve failed: " + errorCode + "ServiceInfo: " + serviceInfo);
+                }
+
+                @Override
+                public void onServiceResolved(NsdServiceInfo serviceInfo) {
+                    Log.i(TAG, "Resolve Succeeded. " + serviceInfo);
+                    Log.i(TAG, services.toString() + "  ;" + serviceInfo.toString());
+                    if (!services.containsKey(serviceInfo.getServiceName())){
+                        Communication comm = new Communication(serviceInfo);
+                        services.put(serviceInfo.getServiceName(), serviceInfo);
+                        serviceComms.put(serviceInfo.getServiceName(), comm);
+                    }
+                }
+            });
         }
 
         @Override
