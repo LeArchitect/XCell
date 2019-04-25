@@ -63,7 +63,7 @@ public class no_wifi extends AppCompatActivity {
             x++;
         }
         Toast.makeText(this, "Wifi is enabled", Toast.LENGTH_SHORT).show();
-        Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.room.class);
+        Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.WelcomeScreen.class);
         getApplicationContext().startActivity(myIntent);
 
     }
