@@ -10,10 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.util.ArrayList;
 
@@ -36,7 +33,7 @@ public class room_adapter extends RecyclerView.Adapter<room_adapter.myViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myViewHolder myViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final myViewHolder myViewHolder, final int i) {
         myViewHolder.room_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,16 +59,17 @@ public class room_adapter extends RecyclerView.Adapter<room_adapter.myViewHolder
         });
         }
 
-/*
+
         myViewHolder.room_name.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
+                myViewHolder.viewSwitcher.showNext();
                 Toast.makeText(mcontext,"This is a long click ", Toast.LENGTH_LONG).show();
                 return true;
             }
         });
-*/
+
         myViewHolder.room_name.setText(rooms.get(i));
         myViewHolder.delete_room.setOnClickListener( new View.OnClickListener(){
 
@@ -111,13 +109,17 @@ public class room_adapter extends RecyclerView.Adapter<room_adapter.myViewHolder
 
     public class myViewHolder extends RecyclerView.ViewHolder{
 
+        ViewSwitcher viewSwitcher;
         TextView room_name;
+        EditText edit_room_name;
         LinearLayout parentLayout;
         ImageButton delete_room, add_room;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
+            viewSwitcher = itemView.findViewById(R.id.vs_room);
             room_name = itemView.findViewById(R.id.room_name);
+            edit_room_name = itemView.findViewById(R.id.edit_room_name);
             parentLayout = itemView.findViewById(R.id.parent_layout_room);
             delete_room = itemView.findViewById(R.id.room_delete);
             add_room = itemView.findViewById(R.id.add_room);

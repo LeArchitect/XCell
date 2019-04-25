@@ -73,6 +73,11 @@ public class device_data {
     public device_data(String deviceType, String deviceName) {
         this.deviceName = deviceName;
         this.deviceType = deviceType;
+    }
+    public void hashMapToDeviceData()
+    {
+        //format:  string:key   switch:on/off
+
 
     }
 }

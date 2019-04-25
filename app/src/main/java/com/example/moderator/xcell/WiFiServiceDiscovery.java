@@ -123,6 +123,11 @@ public class WiFiServiceDiscovery  {
         return services.keySet();
     }
 
+    public ArrayList<String> getServicesArray()
+    {
+
+        return new ArrayList<String>(services.keySet());
+    }
     public Map<String, Communication> getServiceComms() {
         return serviceComms;
     }

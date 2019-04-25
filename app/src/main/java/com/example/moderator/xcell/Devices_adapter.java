@@ -3,6 +3,7 @@ package com.example.moderator.xcell;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.nsd.NsdServiceInfo;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
 
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -23,6 +25,8 @@ public class Devices_adapter extends RecyclerView.Adapter<Devices_adapter.myView
 
     private ArrayList<device_data> devices = new ArrayList<>();
     private Context mcontext ;
+
+
 
     public Devices_adapter(ArrayList<device_data> devices, Context mcontext) {
         this.devices = devices;
@@ -39,22 +43,32 @@ public class Devices_adapter extends RecyclerView.Adapter<Devices_adapter.myView
 
     @Override
     public void onBindViewHolder(@NonNull final myViewHolder myViewHolder, final int i) {
+        final String device_name = WiFiServiceDiscovery.getInstance().getServicesArray().get(i);
+        NsdServiceInfo info = WiFiServiceDiscovery.getInstance().getServiceInfos().get(device_name);
 
-        if(devices.get(i).getDeviceType().equals("switch"))
+        if(info.getServiceType().equals("switch"))
         {
             myViewHolder.parent_layout_devices.removeView(myViewHolder.clickable_layout);
             myViewHolder.parent_layout_devices.removeView(myViewHolder.seekbar_layout);
             //do the rest of the listeners
-            myViewHolder.switch_device_name.setText(devices.get(i).getDeviceName());
+            myViewHolder.switch_device_name.setText(device_name);
             myViewHolder.switch_button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(mcontext,devices.get(i).getDeviceName()+" "+ isChecked, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mcontext,device_name +" "+ isChecked, Toast.LENGTH_SHORT).show();
                     devices.get(i).setDeviceSwitch(isChecked);
+                    if(isChecked)
+                        {
+                            new CommunicationTask().execute(device_name,"on");
+                        }
+                    else
+                        {
+                            new CommunicationTask().execute(device_name,"off");
+                        }
                 }
             });
-
         }
+        /*
         else if(devices.get(i).getDeviceType().equals("seekbar"))
         {
             myViewHolder.parent_layout_devices.removeView(myViewHolder.clickable_layout);
@@ -118,6 +132,7 @@ public class Devices_adapter extends RecyclerView.Adapter<Devices_adapter.myView
 
 
         }
+        */
         else {
             myViewHolder.parent_layout_devices.removeView(myViewHolder.switch_layout);
             myViewHolder.parent_layout_devices.removeView(myViewHolder.seekbar_layout);
@@ -139,7 +154,7 @@ public class Devices_adapter extends RecyclerView.Adapter<Devices_adapter.myView
 
     @Override
     public int getItemCount() {
-        return devices.size();
+        return WiFiServiceDiscovery.getInstance().getServicesArray().size();
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{
