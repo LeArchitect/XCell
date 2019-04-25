@@ -20,12 +20,12 @@ public class devices extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
-        setSupportActionBar(tb);
+        //android.support.v7.widget.Toolbar tb = (android.support.v7.widget.Toolbar) findViewById(R.id.custom_bar);
+        //setSupportActionBar(tb);
 
-        /*
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);*/
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         device_data x = new device_data("color_picker", "room  lamp");
         devices.add(x);
@@ -55,7 +55,7 @@ public class devices extends AppCompatActivity {
             else if (source.equals("rooms"))
             {
 
-                ;//actionBar.setTitle(myIntent.getStringExtra("room_name"));
+                actionBar.setTitle(myIntent.getStringExtra("room_name"));
             }
 
 
@@ -75,11 +75,20 @@ public class devices extends AppCompatActivity {
         conf_list.setLayoutManager(new LinearLayoutManager(this));
     }
 
+
+
     public void addItem(View view) {
         //change to add devices layout
         Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.add_device.class);
         getApplicationContext().startActivity(myIntent);
     }
+
+    public void onBackPressed() {
+        Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.room.class);
+        getApplicationContext().startActivity(myIntent);
+        return;
+    }
+
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);

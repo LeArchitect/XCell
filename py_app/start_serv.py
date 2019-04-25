@@ -11,6 +11,7 @@ from zeroconf import ServiceInfo, Zeroconf
 class XCellServer(object):
     def __init__(self):
         self.addr = socket.gethostbyname(socket.gethostname())
+        # self.addr = "192.168.43.80"
         self.sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
         self.sock.bind((self.addr, 0))
         self.port = self.sock.getsockname()[1]
@@ -24,8 +25,7 @@ class XCellServer(object):
         self.info = ServiceInfo(
             '_xcell._tcp.local.',
             '_Light._xcell._tcp.local.',
-            #socket.inet_aton(self.addr),
-            socket.inet_aton("37.219.114.6"),
+            socket.inet_aton(self.addr),
             self.port, 
             0, 
             0,
@@ -48,7 +48,6 @@ class XCellServer(object):
     
     def receive_msgs(self):
         for addr, conn in self.connections.items():
-            print("Data incoming")
             data = conn.recv(128)
             if len(data) > 0:
                 yield(addr, data)
@@ -61,22 +60,23 @@ class XCellServer(object):
             self.connections[addr].sendall(msg.encode())
         except ConnectionAbortedError:
             return
-
+    def resp_to_msgs(self):
+        for addr, data in self.receive_msgs():
+            print(data)
+            if data == b'STATUS':
+                self.send_status(addr, "OK\n")
+            else:
+                self.send_status(addr, "UNKNOWN REQUEST\n")
+                
 
 if __name__ == '__main__':
     xcell = XCellServer()
-    xcell.start_service({"type":"lightcontrol"})
+    xcell.start_service({"type":"lightswitch"})
     print('Service started')
     xcell.accept_connection_req()
     try:
         while True:
-            msgs = list(xcell.receive_msgs())
-            for addr, data in msgs:
-                print(data)
-                if data == b'STATUS':
-                    xcell.send_status(addr, "OK\n")
-                else:
-                    xcell.send_status(addr, "UNKNOWN REQUEST\n")
+            xcell.resp_to_msgs()
             sleep(1)
     except KeyboardInterrupt:
         pass
