@@ -41,6 +41,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
         welcomeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d(TAG, WiFiServiceDiscovery.getInstance().getXCellServiceType("_Light"));
                 Intent myIntent = new Intent(getApplicationContext(), com.example.moderator.xcell.room.class);
                 getApplicationContext().startActivity(myIntent);
             }
