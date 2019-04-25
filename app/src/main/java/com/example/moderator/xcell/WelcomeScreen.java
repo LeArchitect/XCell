@@ -1,15 +1,15 @@
 package com.example.moderator.xcell;
 
 import android.Manifest;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.nsd.NsdManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
 
 public class WelcomeScreen extends AppCompatActivity {
     public static final String TAG = WelcomeScreen.class.getSimpleName();
@@ -17,10 +17,12 @@ public class WelcomeScreen extends AppCompatActivity {
     private int PERMISSIONS_REQUEST_CODE_ACCESS_FINE_LOCATION = 1;
     private int PERMISSIONS_REQUEST_CODE_CHANGE_WIFI_STATE = 2;
 
+    private WiFiServiceDiscovery serviceDiscovery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.welcome_screen);
+        setContentView(R.layout.welcome);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_CODE_ACCESS_COARSE_LOCATION);
@@ -31,27 +33,22 @@ public class WelcomeScreen extends AppCompatActivity {
             if (checkSelfPermission(Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CHANGE_WIFI_STATE}, PERMISSIONS_REQUEST_CODE_CHANGE_WIFI_STATE);
             }
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
 
         }else{
-            //do something, permission was previously granted; or legacy device
         }
-        scheduleJob();
+        serviceDiscovery = new WiFiServiceDiscovery((NsdManager) getSystemService(Context.NSD_SERVICE));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(TAG,serviceDiscovery.getServices().toString());
+        serviceDiscovery.stopServiceDiscovery();
+    }
 
-    private void scheduleJob(){
-        ComponentName wifiJobService = new ComponentName(getApplicationContext(), WiFiJobService.class);
-        JobInfo jobInfo = new JobInfo.Builder(8,wifiJobService)
-                .setRequiresCharging(false)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .build();
-        JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        int res = jobScheduler.schedule(jobInfo);
-        if (res == JobScheduler.RESULT_SUCCESS){
-            Log.i(TAG, "Jobscheduled");
-        } else {
-            Log.i(TAG,"Failed");
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        serviceDiscovery.startServiceDiscovery();
     }
 }
