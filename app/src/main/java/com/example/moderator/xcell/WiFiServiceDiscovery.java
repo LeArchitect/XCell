@@ -115,6 +115,10 @@ public class WiFiServiceDiscovery  {
         return isDiscovering;
     }
 
+    public String getXCellServiceType(String name) {
+        return new String(getServiceInfos().get(name).getAttributes().get("type"));
+    }
+
     public Map<String, NsdServiceInfo> getServiceInfos() {
         return services;
     }

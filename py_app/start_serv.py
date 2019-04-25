@@ -7,9 +7,13 @@ from time import sleep
 
 from zeroconf import ServiceInfo, Zeroconf
 
+NEWLINE = '\n'
+
+
 
 class XCellServer(object):
     def __init__(self):
+        self.status = None
         self.addr = socket.gethostbyname(socket.gethostname())
         # self.addr = "192.168.43.80"
         self.sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
@@ -19,7 +23,6 @@ class XCellServer(object):
         self.info = None
         self.connections = {}
         print(self.addr,self.port)
-
 
     def start_service(self, desc):
         self.info = ServiceInfo(
@@ -54,8 +57,11 @@ class XCellServer(object):
                 
                 
 
-    def send_status(self, addr, msg = "OK\n"):
-        print('Sent message: ' + msg.strip('\n') + ' To: ' + addr[0])
+    def send_status(self, addr, msg=None):
+        if msg is None:
+            msg = self.status
+        print('Sent message: ' + msg + ' To: ' + addr[0])
+        msg += NEWLINE
         try:
             self.connections[addr].sendall(msg.encode())
         except ConnectionAbortedError:
@@ -63,10 +69,16 @@ class XCellServer(object):
     def resp_to_msgs(self):
         for addr, data in self.receive_msgs():
             print(data)
-            if data == b'STATUS':
-                self.send_status(addr, "OK\n")
+            if data == b'ON':
+                self.status = 'ON'
+                self.send_status(addr)
+            elif data == b'OFF':
+                self.status = 'OFF'
+                self.send_status(addr)
+            elif data == b'STATUS':
+                self.send_status(addr)
             else:
-                self.send_status(addr, "UNKNOWN REQUEST\n")
+                self.send_status(addr, "UNKNOWN_MSG_TYPE")
                 
 
 if __name__ == '__main__':
