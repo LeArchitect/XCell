@@ -35,14 +35,16 @@ public class add_device_adapter extends RecyclerView.Adapter<add_device_adapter.
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder myViewHolder, final int i) {
-        myViewHolder.device_name.setText(devices.get(i).getDeviceName());
+        final String device_name = WiFiServiceDiscovery.getInstance().getServicesArray().get(i);
+        final String type = new String(WiFiServiceDiscovery.getInstance().getServiceInfos().get(device_name).getAttributes().get("type"));
+        myViewHolder.device_name.setText(device_name);
         myViewHolder.device_name.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 Intent myIntent = new Intent(mcontext, com.example.moderator.xcell.devices.class);
                 myIntent.putExtra("source", "add_device");
-                myIntent.putExtra("name", devices.get(i).getDeviceName());
-                myIntent.putExtra("type", devices.get(i).getDeviceType());
+                myIntent.putExtra("name", device_name);
+                myIntent.putExtra("type", type);
                 mcontext.startActivity(myIntent);
                 return false;
             }
@@ -51,7 +53,7 @@ public class add_device_adapter extends RecyclerView.Adapter<add_device_adapter.
 
     @Override
     public int getItemCount() {
-        return devices.size();
+        return WiFiServiceDiscovery.getInstance().getServicesArray().size();
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{

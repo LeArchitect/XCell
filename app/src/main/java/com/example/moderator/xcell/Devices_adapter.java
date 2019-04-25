@@ -45,8 +45,8 @@ public class Devices_adapter extends RecyclerView.Adapter<Devices_adapter.myView
     public void onBindViewHolder(@NonNull final myViewHolder myViewHolder, final int i) {
         final String device_name = WiFiServiceDiscovery.getInstance().getServicesArray().get(i);
         NsdServiceInfo info = WiFiServiceDiscovery.getInstance().getServiceInfos().get(device_name);
-
-        if(info.getServiceType().equals("switch"))
+        final String type = new String(WiFiServiceDiscovery.getInstance().getServiceInfos().get(device_name).getAttributes().get("type"));
+        if(type.equals("switch"))
         {
             myViewHolder.parent_layout_devices.removeView(myViewHolder.clickable_layout);
             myViewHolder.parent_layout_devices.removeView(myViewHolder.seekbar_layout);
@@ -59,11 +59,11 @@ public class Devices_adapter extends RecyclerView.Adapter<Devices_adapter.myView
                     devices.get(i).setDeviceSwitch(isChecked);
                     if(isChecked)
                         {
-                            new CommunicationTask().execute(device_name,"on");
+                            new CommunicationTask().execute(device_name,"ON");
                         }
                     else
                         {
-                            new CommunicationTask().execute(device_name,"off");
+                            new CommunicationTask().execute(device_name,"OFF");
                         }
                 }
             });

@@ -25,13 +25,6 @@ public class add_device extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Available devices");
-
-        device_data x = new device_data("color_picker", "Living room lamp");
-        devices.add(x);
-        device_data y = new device_data("seekbar", "thermostat");
-        devices.add(y);
-        device_data z = new device_data("switch", "garage lamp");
-        devices.add(z);
         initRecylerView();
     }
 
