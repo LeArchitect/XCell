@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 
 public class WelcomeScreen extends AppCompatActivity {
@@ -35,6 +37,15 @@ public class WelcomeScreen extends AppCompatActivity {
         }else{
         }
         WiFiServiceDiscovery.getInstance().setNsdManager((NsdManager)getSystemService(Context.NSD_SERVICE));
+
+        Button welcomeButton = (Button) findViewById(R.id.buttonWelcome);
+
+        welcomeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d(TAG, WiFiServiceDiscovery.getInstance().getServiceComms().get("_Light").toString());
+                new CommunicationTask().execute("_Light", "STATUS");
+            }
+        });
     }
 
     @Override
